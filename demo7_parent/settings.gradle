@@ -1,0 +1,2 @@
+rootProject.name = 'demo7_parent'
+include 'demo7_lib', 'demo7_main'

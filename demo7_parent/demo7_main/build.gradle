@@ -1,0 +1,18 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':demo7_lib')
+    implementation 'com.opencsv:opencsv:5.9'
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+}
+
+application {
+    mainClass = 'main.App'
+}
