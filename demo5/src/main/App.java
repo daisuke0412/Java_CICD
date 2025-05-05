@@ -9,7 +9,7 @@ import logic.ScoreAnalyze;
 
 public class App {
 	public static void main(String[] args) {
-        try (CSVReader reader = new CSVReader(new FileReader("C:\\work\\cicd_demo\\resource\\student_scores.csv"))) {
+		try (CSVReader reader = new CSVReader(new FileReader("student_scores.csv"))) {
             List<String[]> records = reader.readAll();
             ScoreAnalyze scoreAnalyze = new ScoreAnalyze();
             scoreAnalyze.analyze(records);
