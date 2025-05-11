@@ -27,7 +27,7 @@ public class ScoreAnalyze {
 
 		// output
 		System.out.println("student count: " + studentCount);
-		System.out.println("---average---");
+		System.out.println("=average===");
 		System.out.println("english: " + englishAverage);
 		System.out.println("math: " + mathAverage);
 		System.out.println("science: " + scienceAverage);

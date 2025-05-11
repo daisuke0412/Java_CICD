@@ -40,18 +40,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
 		<!-- OpenCSV -->
 	    <dependency>
 	      <groupId>com.opencsv</groupId>
@@ -80,6 +68,14 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+			  <groupId>org.codehaus.mojo</groupId>
+			  <artifactId>exec-maven-plugin</artifactId>
+			  <version>3.5.0</version>
+			  <configuration>
+			    <mainClass>main.Demo8Application</mainClass>
+			  </configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,13 +1,17 @@
 package main.controller;
 
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
 
@@ -21,23 +25,34 @@ public class AppController {
         return "index";
     }
 
-    @GetMapping("/analyze")
-    public String analyze(Model model) {
-        ClassPathResource resource = new ClassPathResource("student_scores.csv");
+    @PostMapping("/analyze")
+    public String analyze(@RequestParam("file") MultipartFile file, Model model) {
 
-        try (CSVReader reader = new CSVReader(new InputStreamReader(resource.getInputStream(), "UTF-8"))) {
+        if (file.isEmpty()) {
+            model.addAttribute("error", "CSVファイルが選択されていません。");
+            return "index";
+        }
 
+        try (
+            CSVReader reader = new CSVReader(
+                new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)))
+        ) {
             List<String[]> records = reader.readAll();
             ScoreAnalyze analyzer = new ScoreAnalyze();
             Map<String, Object> result = analyzer.analyze(records);
 
-            model.addAllAttributes(result); // Thymeleaf に渡す
+            model.addAttribute("analysis", Map.of(
+                "count", result.get("studentCount"),
+                "avgEnglish", result.get("englishAverage"),
+                "avgMath", result.get("mathAverage"),
+                "avgScience", result.get("scienceAverage")
+            ));
 
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "CSVの解析中にエラーが発生しました。");
         }
 
-        return "result";
+        return "index";
     }
 }

@@ -2,12 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>CSV解析</title>
+  <title>テスト結果分析ツール</title>
 </head>
 <body>
-  <h1>CSV解析ツール</h1>
-  <form action="/analyze" method="get">
-    <button type="submit">CSV解析！</button>
+  <h1>テスト結果分析ツール</h1>
+
+  <!-- エラーメッセージがある場合 -->
+  <div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+  </div>
+
+  <!-- ファイルアップロードフォーム -->
+  <form action="/analyze" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv" required>
+    <button type="submit">分析実行！</button>
   </form>
+
+  <!-- 解析結果がある場合 -->
+  <div th:if="${analysis}">
+    <h2>分析結果</h2>
+    <ul>
+      <li>生徒数: <span th:text="${analysis.count}"></span> 人</li>
+      <li>英語の平均点: <span th:text="${analysis.avgEnglish}"></span> 点</li>
+      <li>数学の平均点: <span th:text="${analysis.avgMath}"></span> 点</li>
+      <li>理科の平均点: <span th:text="${analysis.avgScience}"></span> 点</li>
+    </ul>
+  </div>
 </body>
 </html>
